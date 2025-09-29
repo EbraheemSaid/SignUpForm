@@ -1,0 +1,229 @@
+<div class="signup-container">
+  <mat-card class="signup-card">
+    <mat-card-header>
+      <mat-card-title>Create Account</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form
+        [formGroup]="signupForm"
+        (ngSubmit)="onSubmit()"
+        [class.submitted]="isSubmitted"
+        class="signup-form"
+      >
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            formControlName="username"
+            placeholder="Enter your username"
+            [disabled]="isSubmitting"
+          />
+          <mat-error
+            *ngIf="
+              signupForm.get('username')?.hasError('required') &&
+              (signupForm.get('username')?.touched || isSubmitted)
+            "
+          >
+            Username is required
+          </mat-error>
+          <mat-error
+            *ngIf="
+              signupForm.get('username')?.hasError('minlength') &&
+              (signupForm.get('username')?.touched || isSubmitted)
+            "
+          >
+            Username must be at least 3 characters
+          </mat-error>
+          <mat-error
+            *ngIf="
+              signupForm.get('username')?.hasError('maxlength') &&
+              (signupForm.get('username')?.touched || isSubmitted)
+            "
+          >
+            Username cannot exceed 50 characters
+          </mat-error>
+          <mat-error
+            *ngIf="
+              signupForm.get('username')?.hasError('pattern') &&
+              (signupForm.get('username')?.touched || isSubmitted)
+            "
+          >
+            Username can only contain letters, numbers, and underscores
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Enter your email"
+            [disabled]="isSubmitting"
+          />
+          <mat-error
+            *ngIf="
+              signupForm.get('email')?.hasError('required') &&
+              (signupForm.get('email')?.touched || isSubmitted)
+            "
+          >
+            Email is required
+          </mat-error>
+          <mat-error
+            *ngIf="
+              signupForm.get('email')?.hasError('email') &&
+              (signupForm.get('email')?.touched || isSubmitted)
+            "
+          >
+            Please enter a valid email
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            placeholder="Create a password"
+            [disabled]="isSubmitting"
+          />
+          <mat-error
+            *ngIf="
+              signupForm.get('password')?.hasError('required') &&
+              (signupForm.get('password')?.touched || isSubmitted)
+            "
+          >
+            Password is required
+          </mat-error>
+          <mat-error
+            *ngIf="
+              !signupForm.get('password')?.hasError('required') &&
+              !signupForm.get('password')?.hasError('minlength') &&
+              signupForm.get('password')?.hasError('pattern') &&
+              (signupForm.get('password')?.touched || isSubmitted)
+            "
+          >
+            Password must contain at least one uppercase letter, one lowercase
+            letter, and one number
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Password Requirements Checklist -->
+        <div
+          class="password-requirements"
+          *ngIf="
+            signupForm.get('password')?.touched ||
+            isSubmitted ||
+            signupForm.get('password')?.value
+          "
+        >
+          <p class="requirements-title">Password must contain:</p>
+          <div class="requirement-item">
+            <mat-icon
+              [class.valid]="passwordRequirements.minLength"
+              [class.invalid]="!passwordRequirements.minLength"
+            >
+              {{
+                passwordRequirements.minLength
+                  ? "check_circle"
+                  : "highlight_off"
+              }}
+            </mat-icon>
+            <span
+              [class.valid]="passwordRequirements.minLength"
+              [class.invalid]="!passwordRequirements.minLength"
+            >
+              At least 6 characters
+            </span>
+          </div>
+          <div class="requirement-item">
+            <mat-icon
+              [class.valid]="passwordRequirements.hasLowercase"
+              [class.invalid]="!passwordRequirements.hasLowercase"
+            >
+              {{
+                passwordRequirements.hasLowercase
+                  ? "check_circle"
+                  : "highlight_off"
+              }}
+            </mat-icon>
+            <span
+              [class.valid]="passwordRequirements.hasLowercase"
+              [class.invalid]="!passwordRequirements.hasLowercase"
+            >
+              At least one lowercase letter
+            </span>
+          </div>
+          <div class="requirement-item">
+            <mat-icon
+              [class.valid]="passwordRequirements.hasUppercase"
+              [class.invalid]="!passwordRequirements.hasUppercase"
+            >
+              {{
+                passwordRequirements.hasUppercase
+                  ? "check_circle"
+                  : "highlight_off"
+              }}
+            </mat-icon>
+            <span
+              [class.valid]="passwordRequirements.hasUppercase"
+              [class.invalid]="!passwordRequirements.hasUppercase"
+            >
+              At least one uppercase letter
+            </span>
+          </div>
+          <div class="requirement-item">
+            <mat-icon
+              [class.valid]="passwordRequirements.hasNumber"
+              [class.invalid]="!passwordRequirements.hasNumber"
+            >
+              {{
+                passwordRequirements.hasNumber
+                  ? "check_circle"
+                  : "highlight_off"
+              }}
+            </mat-icon>
+            <span
+              [class.valid]="passwordRequirements.hasNumber"
+              [class.invalid]="!passwordRequirements.hasNumber"
+            >
+              At least one number
+            </span>
+          </div>
+        </div>
+
+        <!-- reCAPTCHA -->
+        <div class="recaptcha-container">
+          <ngx-recaptcha2
+            #captchaRef
+            *ngIf="reCaptchaKey"
+            [siteKey]="reCaptchaKey"
+            (expire)="onCaptchaExpired()"
+            (success)="onCaptchaSuccess($event)"
+          >
+          </ngx-recaptcha2>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+
+        <div *ngIf="successMessage" class="success-message">
+          {{ successMessage }}
+        </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="isSubmitting || !signupForm.valid || !captchaResponse"
+          class="submit-button"
+        >
+          <span *ngIf="!isSubmitting">Sign Up</span>
+          <span *ngIf="isSubmitting">Creating Account...</span>
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

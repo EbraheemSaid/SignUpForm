@@ -1,0 +1,146 @@
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+  background: #f5f5f5;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 450px;
+  padding: 40px 32px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  background: white;
+  border-radius: 8px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px; /* Reduce space between title and form */
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 14px; /* Reduce space between password and checklist */
+}
+
+/* Adjust mat-card-title spacing */
+.signup-card .mat-mdc-card-title {
+  margin-bottom: 16px;
+  padding: 0;
+}
+
+.recaptcha-container {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0 24px 0;
+  padding: 12px 0;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.error-message {
+  color: #d32f2f;
+  margin: 16px 0;
+  padding: 14px;
+  background-color: #ffebee;
+  border-radius: 4px;
+  border-left: 4px solid #d32f2f;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.success-message {
+  color: #2e7d32;
+  margin: 16px 0;
+  padding: 14px;
+  background-color: #e8f5e9;
+  border-radius: 4px;
+  border-left: 4px solid #2e7d32;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.submit-button {
+  margin-top: 12px;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.submit-button:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+
+/* Center the reCAPTCHA widget */
+ngx-recaptcha2 {
+  display: flex;
+  justify-content: center;
+}
+
+/* Hide global error styling that might interfere */
+.signup-form ::ng-deep .mat-mdc-form-field-error {
+  display: block; /* Make sure error messages display */
+}
+
+/* Proper styling for error states */
+.signup-form ::ng-deep .mat-mdc-input-element.ng-invalid.ng-touched:not(:focus):not(.ng-pristine) {
+  caret-color: #d32f2f;
+}
+
+/* Styling for error messages */
+.signup-form .mat-mdc-form-field .mat-mdc-form-field-error {
+  font-size: 12px;
+  line-height: 1.3;
+  margin-top: 4px;
+}
+
+/* Ensure error display when form is submitted */
+.signup-form.submitted .mat-mdc-form-field-error {
+  display: block;
+}
+
+/* Password Requirements Styles */
+.password-requirements {
+  margin: 10px 0 8px 0; /* Reduce top margin */
+  padding: 10px;
+  background-color: #fafafa;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  font-size: 12px;
+}
+
+.requirements-title {
+  margin: 0 0 5px 0; /* Reduce title margin */
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+}
+
+.requirement-item {
+  display: flex;
+  align-items: center;
+  margin: 2px 0; /* Reduce item spacing */
+  font-size: 12px;
+}
+
+.requirement-item mat-icon {
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  margin-right: 6px;
+}
+
+.requirement-item .valid {
+  color: #4caf50; /* Green when checked */
+}
+
+.requirement-item .invalid {
+  color: #f44336; /* Red when unchecked */
+}
