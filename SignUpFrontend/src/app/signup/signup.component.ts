@@ -124,7 +124,6 @@ export class SignupComponent implements OnInit {
       this.errorMessage = "";
       this.hasError = false;
 
-      // Reset captcha after a small delay to avoid jarring experience
       setTimeout(() => {
         this.resetCaptcha();
       }, 500);

@@ -161,18 +161,11 @@ namespace SignUpApi.Data
 
         public Task<AppUser?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken = default)
         {
-            // Since we don't maintain username uniqueness, we need to search through all users
-            // This is less efficient, but usernames are not unique in this implementation
-            // For production, consider using a different approach or making usernames unique too
-            
-            // For now, return null as we don't support finding by username efficiently
-            // The application should use email for lookups instead
+           
             return Task.FromResult<AppUser?>(null);
         }
 
-        // We still need to implement this method to satisfy the interface
-        // But we'll make username uniqueness not enforced by returning null here
-        // The actual uniqueness check will happen at the application level if needed
+        
 
         public Task<string> GetUserIdAsync(AppUser user, CancellationToken cancellationToken = default)
         {
